@@ -28,26 +28,28 @@ rec=0
 import keras
 import cv2
 import tensorflow as tf
-import PIL.Image
+#import PIL.Image
 #from tensorflow.keras.utils import to_categorical
 #from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from keras_preprocessing.image import load_img,img_to_array
 #from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import ImageDataGenerator
+#from keras.preprocessing.image import ImageDataGenerator
 
 #import tensorflow.compat.v2 as tf
-model = keras.models.load_model('C:\\Users\\anish\\Desktop\\IBM2\\foodModel.model')
+from keras.models import load_model
+model = keras.models.load_model('C:\\Users\\anish\\Desktop\\IBM2\\Daiyan.h5')
 import numpy as np
 
-
+##
+import numpy as np
+CATEGORIES =  ['Vegetable-Fruit', 'Egg', 'Bread', 'Soup', 'Seafood', 'Meat', 'vada pav', 'Fried food', 'pizza', 'Dessert', 'Dairy product', 'Rice', 'burger', 'Noodles-Pasta']
 def image(path):
-  image=load_img(path,target_size=(40,40))
-  image=img_to_array(image) 
-  image=image/255.0
-  prediction_image=np.array(image)
-  prediction_image= np.expand_dims(image, axis=0)
-  return prediction_image
- 
+    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    new_arr = cv2.resize(img, (60, 60))
+    new_arr = np.array(new_arr)
+    new_arr = new_arr.reshape(-1, 60, 60, 1)
+    return new_arr
+ ##
 #make shots directory to save pics
 try:
     os.mkdir('./shots')
@@ -123,34 +125,18 @@ def tasks():
             path = os.getcwd()
             print(d)
             p=os.path.join(path, "", d )
-            print(p)
-            ##
-            train_dir = 'C:\\Users\\anish\\Desktop\\IBM2\\ibmFoodDataSet'
-            Name=[]
-            for file in os.listdir(train_dir):
-                Name+=[file]
-            print(Name)
-            print(len(Name))
-            N=[]
-            for i in range(len(Name)):
-                N+=[i]
-            mapping=dict(zip(Name,N)) 
-            reverse_mapping=dict(zip(N,Name)) 
-            def mapper(value):
-                return reverse_mapping[value]
-            import numpy as np
-            prediction=model.predict(image(p))
-            value=np.argmax(prediction)
-            move_name=mapper(value)
-            print("Prediction is {}.".format(move_name))
-            ##
-            # prediction = model.predict([image(p)])  
+            
+             
+             
+             
+             
+            prediction = model.predict([image(p)])  
              
 
-            # name=(CATEGORIES[prediction.argmax()])
-            # Product_name=name
-            data=Nutrients(move_name)
-            return render_template('Predect.html',name=move_name,data=data)
+            name=(CATEGORIES[prediction.argmax()])
+            Product_name=name
+            data=Nutrients(Product_name)
+            return render_template('Predect.html',name=name,data=data)
          
         elif  request.form.get('stop') == 'Stop/Start':
             if(switch==1):
