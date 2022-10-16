@@ -6,9 +6,11 @@ WORKDIR /application
 
 COPY requirements.txt.
 
-# Copy python dependencies and install these RUN pip install -r requirements.txt # Copy the rest of the applicationssd
+# Copy python dependencies and install these RUN 
+RUN pip install -r requirements.txt 
+# Copy the rest of the applicationssd
 
-COPY.
+COPY . .
 
 #Environment variables
 
