@@ -10,7 +10,7 @@ COPY.
 
 #Environment variables
 
-ENV PYTHONUNBUFFERED 1
+#ENV PYTHONUNBUFFERED 1
 
 EXPOSE port 8000 to allow communication to/from server
 
