@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM Python 3.9.12
 
 Set up directories RUN mkdir /application WORKDIR /application
 
