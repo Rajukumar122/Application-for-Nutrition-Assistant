@@ -1,6 +1,8 @@
 FROM Python 3.9.12
 
-Set up directories RUN mkdir /application WORKDIR /application
+#Set up directories 
+RUN mkdir /application
+WORKDIR /application
 
 COPY requirements.txt.
 
@@ -10,7 +12,7 @@ COPY.
 
 #Environment variables
 
-#ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
 EXPOSE port 8000 to allow communication to/from server
 
